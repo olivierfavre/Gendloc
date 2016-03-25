@@ -1,0 +1,44 @@
+{# Affichage de la page de connexion #}
+
+{# app/Resources/views/security/login.html.twig #}
+{% extends 'gendloc.html.twig' %}
+
+{% block title %} GENDLOC - LOGIN {% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('css/log/style.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/log/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/log/jquery.ui.shake.js') }}"></script>
+{% endblock %}
+
+
+{% block body %}
+
+<div id="main">
+</br></br></br></br></br></br></br></br>
+<div id="box">
+    
+<form action="{{ path('login') }}" method="post">
+    <label for="username">Nom :</label>
+    <input type="text" id="username" name="_username" value="{{ last_username }}" class="input"/>
+
+    <label for="password">Mot de passe :</label>
+    <input type="password" id="password" name="_password" class="input"/><br/>
+	<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" >
+	<input type="submit" class="button button-primary" value="ENTRER" id="login"/>
+
+	<div id="error">
+        {% if error %}
+            Combinaison login/mot de passe invalide.
+            <script>
+		      $('#box').shake();
+            </script>
+	    {% endif %}
+	</div>
+</form>
+</div>
+</div>
+{% endblock %}

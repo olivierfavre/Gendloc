@@ -1,0 +1,61 @@
+{# Affichage de l'onglet admin de la sidebar #}
+
+{% extends 'gendloc.html.twig' %}
+
+{% block sidebar%}
+<div id="sidebar" class="sidebar active">
+  {{ include('sidebar_menu.html.twig') }}
+
+    <!-- Tab panes -->
+    <div class="sidebar-content collapsed">
+    
+        <!--tab ADMIN-->
+        <div class="sidebar-pane.active" id="admin" style="text-align:center;">
+            </br>
+            <tr><td>
+                <form action={{ path('security_createuser') }}>
+                    <input type="submit" value="Créer un utilisateur" style="width:220px;height:40px;border-radius:10px;cursor:pointer;font-size:120%" >
+                    <br></br>
+                </form>
+            </td></tr>
+            <tr><td>
+                {# <form action={{ path('security_drop_user') }}> #}
+                <form action={{ path('index') }}>
+                    <input type="submit" value="Supprimer un utilisateur" style="width:220px;height:40px;border-radius:10px;cursor:pointer;font-size:120%;">
+                    <br></br>
+                </form>
+            </td></tr>
+            <tr><td>
+                {#  <form action={{ path('security_new_password') }}> #}
+                <form action={{ path('index') }}>
+                    <input type="submit" value="Réinitialiser un mot de passe" style="width:220px;height:40px;border-radius:10px;cursor:pointer;font-size:120%;" >
+                    <br></br>
+                </form>
+            </td></tr>
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <tr><td>
+                {# <form action={{ path('security_create_unite') }}> #}
+                <form action={{ path('index') }}>
+                    <input type="submit" value="Créer une nouvelle unité" style="width:220px;height:40px;border-radius:10px;cursor:pointer;font-size:120%;" >
+                    <br></br>
+                </form>
+            </td></tr>
+            <tr><td>
+                {# <form action={{ path('security_new_role') }}> #}
+                <form action={{ path('index') }}>
+                    <input type="submit" value="Changer un rôle" style="width:220px;height:40px;border-radius:10px;cursor:pointer;font-size:120%;" >
+                    <br></br>
+                </form>
+            </td></tr>
+            <tr><td>
+                {# <form action={{ path('security_drop_unite') }}> #}
+                <form action={{ path('index') }}>
+                    <input type="submit" value="Supprimer une unité" style="width:220px;height:40px;border-radius:10px;cursor:pointer;font-size:120%" >
+                    <br></br>
+                </form>
+            </td></tr>
+        {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

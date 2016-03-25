@@ -1,0 +1,39 @@
+{# Affichage du tableau des géoloc dans l'onglet géoloc #}
+
+<html>
+  <body>
+    <table id="res_loc">
+      
+      <thead> <!-- En-tête du tableau -->
+    	<tr>
+    	  <th>Telephone</th>
+          <th>Date</th>
+    	  <th>Statut</th>
+    	</tr>
+
+      </thead>
+      <tbody style="text-align:left">
+      {% for item in data %} <!-- boucle sur les lignes du tableau $data envoyé par GendlocController -->
+        <tr>
+            <td>{{ item.tel_number }}</td>
+            <td>{{ item.date }} - {{ item.heure }}</td>
+            <td>{{ item.statut }}</td>
+        {% if item.lat is defined %} <!-- définition des variables class pour pouvoir afficher les informations présentes dans le popup qui apparaît lorsqu'on clique sur un marker de géoloc -->
+            <td style="display:none;" class="lat">{{ item.lat }}</td>
+            <td style="display:none;" class="lng">{{ item.lng }}</td>
+            <td style="display:none;" class="tel">{{ item.tel_number }}</td>
+            <td style="display:none;" class="heure">{{ item.heure }}</td>
+            {% if item.altitude is defined %}
+                <td style="display:none;" class="alt">{{ item.altitude }}</td> 
+                <td style="display:none;" class="com">{{ item.commune }}</td>
+                <td style="display:none;" class="bp">{{ item.service }}</td>
+            {% endif %}
+        </tr>
+        {% else%}
+            no data
+        {% endif %}
+      {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>

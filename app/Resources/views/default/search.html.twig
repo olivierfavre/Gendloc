@@ -1,0 +1,57 @@
+{# Affichage de l'onglet recherche de la sidebar #}
+
+{% extends 'gendloc.html.twig'%}
+
+{% block sidebar%}
+<div id="sidebar" class="sidebar active">
+  {{ include('sidebar_menu.html.twig') }}
+  
+  <!-- Tab panes -->
+  <div class="sidebar-content collapsed">
+    
+    <!--tab SEARCH-->
+    {% block search %}
+    <div class="sidebar-pane.active" id="search">
+      <h1>Recherche</h1>
+      <h3>Attention vue écran</h3>
+      
+      <form name="searchform">
+	<input type="TEXT" name="c" id="c" autofocus >
+	<input type="submit" value="RECHERCHER" >
+
+	</br></br>
+	<div id="res_nominatim"></div>
+	<div id="res_topo"></div>
+	<div id="res_BAN"></div>
+	<div id="res_com"></div>
+	
+      </form>
+      Recherche floue IGN, base adresse nationale et nominatim.
+
+      <script>
+      //script qui permet l'affichage des résultats de la recherche
+	$( "#search" ).submit(function( event ) { // fonction qui s'exécute quand on appuie sur le bouton "recherche"
+
+	    // Stop form from submitting normally
+	    event.preventDefault();
+
+	    term = encodeURIComponent($("#search").find( "input[name='c']" ).val()); //récupère la valeur de 'c' qui est le terme à rechercher
+	    url = "{{ path('search_result') }}";
+	
+	    //Send the data using get
+	    var posting = $.get( url, {c: term}) ;
+	
+	    // Put the results in a div
+	    posting.done(
+	        function( data ) {
+	            var content = $( data );
+                    $( "#res_nominatim" ).empty().append( content );
+	        }
+	    );
+	})
+      </script>
+    </div>
+    {% endblock %}
+  </div>
+</div>
+{% endblock %}

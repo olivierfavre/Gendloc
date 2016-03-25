@@ -1,0 +1,34 @@
+{# Gestion de l'affichage des informations visibles par le requérant  #}
+
+<html>
+  <body>
+   
+
+	{% if prec <= 15 %}
+	<table width='100%'>
+		<tr><td><div id='vert'>PRECISION 100 m</div></td></tr>
+		<tr><td><div id='vert'>PRECISION 30 m</div></td></tr>
+		<tr><td><div id='vert'>PRECISION 15 m</div></td></tr>
+	</table><br>
+	<table width='100%'><tr><td><H1>SUCCES</H1></td></tr></table></br>Message envoy&eacute &agrave {{ unite }}
+	
+	{% elseif prec <= 30 %}
+	<table width='100%'>
+		<tr><td><div id='vert'>PRECISION 100 m</div></td></tr>
+		<tr><td><div id='vert'>PRECISION 30 m</div></td></tr>
+		<tr><td><div id='rouge'>PRECISION 15 m</div></td></tr>
+	</table><br>
+        <table width='100%'><tr><td><H1>PATIENTER</H1></td></tr></table>
+	{% else %}
+	<table width='100%'>
+		<tr><td><div id='vert'>PRECISION 100 m</div></td></tr>
+		<tr><td><div id='rouge'>PRECISION 30 m</div></td></tr>
+		<tr><td><div id='rouge'>PRECISION 15 m</div></td></tr>
+	</table><br>
+        <table width='100%'><tr><td><H1>PATIENTER</H1></td></tr></table>
+	{% endif %}
+
+
+    
+  </body>
+</html>

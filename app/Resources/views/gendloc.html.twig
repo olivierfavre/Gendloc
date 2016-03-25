@@ -1,0 +1,127 @@
+{# Page de base avec inclusion des bibliothèques, définitions des fonctions utilisées pour la carte, inclusion de la carte dans le bloc carte #}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html ; charset=UTF-8" />
+    <title>{% block title %} {% if is_granted('ROLE_ADMIN') %} GENDLOC - SECOURS EN MONTAGNE - ADMIN {% else %} GENDLOC - SECOURS EN MONTAGNE {% endif %}{% endblock %}</title>
+    <meta  charset="UTF-8" >
+
+    {% block stylesheets %} {# Inclusion des bibliothèques et des feuilles de style #}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!--bibliothèque jquery -->
+    <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    <!--bibliothèque leaflet pour affichage map-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!--bibliothèque sidebar pour affichage menu-->
+    <script src="{{ asset('js/sidebar/leaflet-sidebar.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('js/sidebar/leaflet-sidebar.css') }}" />
+    <!--bibliothèque dynatable pour affichage résultats recherches et sms-->
+    <script src="{{ asset('js/jquery-dynatable/jquery.dynatable.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('js/jquery-dynatable/jquery.dynatable.css') }}" />
+    <!--bibliothèque coordinates pour affichage coordonnées sous la souris-->
+    <script src="{{ asset('js/Leaflet.Coordinates/dist/Leaflet.Coordinates-0.1.4.src.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('js/Leaflet.Coordinates/dist/Leaflet.Coordinates-0.1.4.css') }}" />
+    <!--[if lte IE 8]><link rel="stylesheet" href="{{ asset('js/Leaflet.Coordinates/dist/Leaflet.Coordinates-0.1.4.ie.css') }}" /><![endif]-->
+    <!--feuille de style table-->
+    <link rel="stylesheet" href="{{ asset('css/main/table.css') }}" />
+    <!--bibliothèque intl-tel-input pour affichage menu envoi sms-->
+    <script src="{{ asset('js/intl-tel-input/build/js/intlTelInput.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('js/intl-tel-input/build/css/intlTelInput.css') }}">
+    <!--bibliothèque styledLayerControl pour affichage menu couches geo-->
+    <script src="{{ asset('js/Leaflet.StyledLayerControl/src/styledLayerControl.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('js/Leaflet.StyledLayerControl/css/styledLayerControl.css') }}" />
+    <!--bibliothèque leaflet-ajax-->
+    <script src="{{ asset('js/leaflet-ajax/dist/leaflet.ajax.min.js') }}"></script>
+    <!--bibliothèque restpostgis pour affichage couche résultats géoloc-->
+    <script src="{{ asset('/js/restpostgis/lvector.js') }}"></script>
+    <!--biblioteque leaflet pulse pour marker geoloc selectionné-->
+    <script src="{{ asset('js/leaflet-pulse/L.Icon.Pulse.js') }}"></script>   
+    <link rel="stylesheet" href="{{ asset('js/leaflet-pulse/L.Icon.Pulse.css') }}" />
+	
+    <style>
+      body {
+      padding: 0;
+      margin: 0;
+      }
+      html, body, #map {
+      height: 100%;
+      font-family: Verdana, Arial, sans-serif;
+      font-size: 12px;
+      }
+    </style>
+    {% endblock %}
+    
+  </head>
+  <body>
+    {% block javascripts %}
+    <script>
+    {# Définitions des fonctions utilisées par la carte #}
+    function ConvertDDToDMS(D){
+        var sign;
+    	D<0?sign="-":"";
+    	return [sign,Math.abs(0|D), '° ', 0|(D<0?D=-D:D)%1*60, "' ", 0|D*60%1*60, '"'].join('');
+    }
+    function ConvertDDToDMM(D){
+    	var sign;
+    	D<0?sign="-":"";
+    	return [sign,Math.abs(0|D), '° ', ((D<0?D=-D:D)%1*60).toFixed(3), "' "].join('');
+    }
+
+/* EN COURS DE DEVELOPPEMENT   
+    function alt_com(e) {
+      url = "{{ path('open_alti') }}";
+      // Send the data using post
+      var lng = parseFloat (e.latlng.lng);
+      var lat = parseFloat (e.latlng.lat);
+      var posting = $.get( url, {lng : lng,lat :lat}) ;
+      // Put the results in a div
+      posting.done(function( data ) {
+    		var content = jQuery.parseJSON(data);
+    		//alert (content.elevations[0]);
+    		var alt =(content.elevations[0]);
+    		//return (content);
+    		url = "{{ path('req_commune') }}";
+    		var lng = parseFloat (e.latlng.lng);
+            var lat = parseFloat (e.latlng.lat);
+    		var posting = $.get( url, {lng : lng,lat :lat}) ;
+    		posting.done(function( data ) {
+    			var content = jQuery.parseJSON(data);
+    			var commune = content.commune;
+    			var bp = content.bp;
+    			//alert ("COMMUNE : "+commune+"\r\n BP : "+ bp + "\r\n ALTITUDE : "+alt+" m");
+    			var popcop = L.popup()
+    				.setLatLng(e.latlng)
+    				.setContent("COMMUNE : "+commune+"</br> BP : "+ bp +)
+    				.openOn(map);
+    			return(content);
+    		});
+    		var popcop = L.popup()
+    			.setLatLng(e.latlng)
+    			.setContent("</br> ALTITUDE : "+alt+" m")
+    			.openOn(map);
+    		return(content);
+    	})
+    }
+*/
+    </script>
+    {% endblock %}
+
+   
+    {% block body %} {# Définitions du bloc body qui contient la sidebar et la carte #}
+
+
+    {% block sidebar%}
+        {{ include('sidebar_menu.html.twig') }}
+    {% endblock %}
+
+     {% block carte %}
+        {{ include('default/carte.html.twig') }}
+    {% endblock %}
+
+   
+    {% endblock %}
+  </body>
+</html>

@@ -1,0 +1,71 @@
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+security_createuser:
+    path:      /createUser
+    defaults:  { _controller: AppBundle:Security:createuser }
+
+security_admin:
+    path:      /admin
+    defaults:  { _controller: AppBundle:Security:admin }
+
+login:
+    path:     /login
+    defaults: { _controller: AppBundle:Security:login }
+
+logout:
+    path:     /logout
+
+index:
+    path:     /index
+    defaults: { _controller: AppBundle:Gendloc:index }
+
+home:
+    path:     /home
+    defaults: { _controller: AppBundle:Gendloc:home }
+
+search:
+    path:     /search
+    defaults: { _controller: AppBundle:Gendloc:search }
+
+search_result:
+    path:     /searchResult
+    defaults: { _controller: AppBundle:Gendloc:searchResult }
+
+nominatim:
+    path:     /nominatim
+    defaults: { _controller: AppBundle:Gendloc:nominatim }
+
+search:
+    path:     /geoloc
+    defaults: { _controller: AppBundle:Gendloc:geoloc }
+
+sms_send:
+    path:     /sms_send
+    defaults: { _controller: AppBundle:Gendloc:sms_send }
+    methods:  [get]
+
+maj_sms:
+    path:     /maj_sms
+    defaults: { _controller: AppBundle:Gendloc:maj_sms }
+
+position:
+    path:     /position
+    defaults: { _controller: AppBundle:Reception:position }
+    methods:  [get]
+
+succes:
+    path:     /position/succes
+    defaults: { _controller: AppBundle:Reception:succes }
+    methods:  [get]
+
+position:
+    path:     /open_alti
+    defaults: { _controller: AppBundle:Gendloc:open_alti }
+
+
+position:
+    path:     /req_commune
+    defaults: { _controller: AppBundle:Gendloc:req_commune }
+    methods:  [get]

@@ -1,0 +1,29 @@
+{# Affichage de l'onglet home de la sidebar #}
+
+{% extends 'gendloc.html.twig' %}
+
+{% block sidebar%}
+<div id="sidebar" class="sidebar collapsed">
+  {{ include('sidebar_menu.html.twig') }}
+
+  <!-- Tab panes -->
+  <div class="sidebar-content active">
+
+    <!--tab HOME-->
+    <div class="sidebar-pane.active" id="home">
+      <h1>DEMO GENDLOC - CORG</h1>
+      <h1>Fonctionnalités proposées</h1>
+      <p>Fond de carte IGN et OSM</p>
+      <p>Recherche IGN toponyme et commune</p>
+      <p>Recherche nominatim openstreetmap</p>
+      <p>Recherche Base Adresse Nationale - adresse.data.gouv.fr</p>
+      <p>Gendloc</p>
+      <p>Affichage couche tracking smartphone</p>
+      <p>Affichage couche accueil gendarmerie</p>
+      {% if is_granted('ROLE_ADMIN') %}
+        <p>Administration des utilisateurs de l'application.<p>
+	  {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

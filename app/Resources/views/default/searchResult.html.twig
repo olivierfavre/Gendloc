@@ -1,0 +1,49 @@
+{# Affichage des résultats dans l'onglet recherche de la sidebar #}
+
+<html>	
+<body>
+	
+	
+    {% if res.place is defined %} {# Vérification de l'existence d'un résultat #}
+
+    <h3>RÃ©sultats de la recherche pour le terme {{ term }}</h3>
+
+    <table id="nominatim-table"><caption>BASE NOMINATIM</caption>
+   
+        <thead> <!-- En-tête du tableau -->
+            <tr>
+    		  <th style="display:none;">lat</th>
+        	  <th style="display:none;">lon</th>
+    		  <th>nom</th>
+    		  <th>type</th>
+    		</tr>
+    	</thead><tbody style="text-align:left">
+		
+		{% for pl in res.place %} {# boucle sur les résultats pour affichage des noms et types #}
+	         
+        <tr class="">
+		  <td style="display:none;" class="lat">
+		    {{ pl.0.attributes.lat }}
+		  </td><td style="display:none;" class="lng">
+		    {{ pl.0.attributes.lon }}
+		  </td><td class="nom"> 
+		    {{ pl.0.attributes.display_name }}
+		  </td><td>
+		    {{ pl.0.attributes.type }}
+		  </td>
+		<tr>
+		
+		{% endfor %}
+		
+	  </tbody></table>
+	  
+	  {% else %}
+	  
+	      <h3>Aucun r&eacutesultat pour le terme {{ term }}.</h3>
+	      
+	  {% endif %}
+	  
+
+
+</body>
+</html>
