@@ -40,7 +40,7 @@ class SecurityController extends Controller
             array(
                 // last username entered by the user
                 'last_username' => $lastUsername,
-                'error'         => $error,
+                'error'         => $error
             )
         );
     }
@@ -54,14 +54,11 @@ class SecurityController extends Controller
 
         //chargement des coordonnées de l'unité de l'utilisateur courant dans la variable $rows.
         require __DIR__.'/../Services/coordinates.php';
-        
+
         //redirection vers admin.html.twig avec les paramètres lng et lat pour centrer la carte sur l'unité
         return $this->render('admin/admin.html.twig', array( 'lng'=> $rows[0]['lng'], 'lat'=>$rows[0]['lat'] ));
     }
 
-
-
-    
     /**
      * @Route("/createUser",name="security_createuser")
      * @Security("has_role('ROLE_ADMIN')")
@@ -86,7 +83,7 @@ class SecurityController extends Controller
 
         // si le fromulaire est soumis et est valide le mot de passe est encodé pour être stocké dans la table
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
             $encoder = $this->container->get('security.password_encoder');
             $encoded = $encoder->encodePassword($user, $user->getPassword());
 
@@ -96,7 +93,7 @@ class SecurityController extends Controller
 
             $em->persist($user);
             $em->flush();
-            
+
             // redirection vers la page index
             return $this->redirectToRoute('index');
         }

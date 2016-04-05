@@ -53,6 +53,13 @@ class ReceptionController extends Controller
                 return new Response('<html><body>ERREUR : JETON INVALIDE</body></html>');
             }
 
+        // récupération des données issues de la requête
+        $sms_id = $rows[0]['id'];
+        $date = $rows[0]['date'];
+        $heure = $rows[0]['heure'];
+        $operator_id = $rows[0]['operator_id'];
+        $tel = $rows[0]['tel_number'];
+        $val = $rows[0]['validite'];
         if ($n==4) // ERREUR PERMISSION GPS
             {
                 $query = "UPDATE app_smsloc SET statut = 'PERMISSION' WHERE id =".$sms_id;
@@ -73,14 +80,6 @@ class ReceptionController extends Controller
                 $result = $conn->executeUpdate($query);
                 return new Response("<html><body>GPS allumé à l'extérieur !</body></html>");
             }
-
-        // récupération des données issues de la requête
-        $sms_id = $rows[0]['id'];
-        $date = $rows[0]['date'];
-        $heure = $rows[0]['heure'];
-        $operator_id = $rows[0]['operator_id'];
-        $tel = $rows[0]['tel_number'];
-        $val = $rows[0]['validite'];
 
         // Récupération de l'unité de l'opérateur à l'origine du SMS 
         $query = "SELECT app_unites.id AS id, name from app_unites, app_users WHERE app_users.unite=app_unites.id AND app_users.id=".$operator_id;
