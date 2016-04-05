@@ -1,5 +1,5 @@
-PA_GENDLOC
-==========
+GENDLOC
+=======
 
     vagrant up
     vagrant ssh
