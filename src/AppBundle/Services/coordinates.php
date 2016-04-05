@@ -6,7 +6,7 @@ $unite = $user->getUnite();
 
 //chargement des coordonnées de l'opérateur connecté.
 $conn = $this->get('database_connection');
-$query = "SELECT ST_X(coordinates) AS lng, ST_Y(coordinates) AS lat FROM app_unites where id=".$unite;
+$query = "SELECT ST_X(coordinates::geometry) AS lng, ST_Y(coordinates::geometry) AS lat FROM app_unites where id=".$unite;
 $rows =$conn->fetchAll($query);
 
 
