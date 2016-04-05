@@ -4,9 +4,7 @@ PA_GENDLOC
     vagrant up
     vagrant ssh
     cd /vagrant
-    php bin/console doctrine:createdb
-    php bin/console doctrine:schema:update --force
-    
+
 Éditer le fichier *app/config/parameters.yml* et modifier la variable devmail
 pour recevoir les mails de dev. (envoi sms).
 
